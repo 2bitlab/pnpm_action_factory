@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
     steps:
       - name: 从tag中解析出当前构建的分支，仓库等，并暴露到环境变量中
-        uses: 2bitlab/tag-parse-action@master
+        uses: AutumnWhj/tag-parse-action@master
         with:
           githubToken: ${{ secrets.ACCESS_TOKEN }}
 
@@ -98,7 +98,7 @@ jobs:
 
       - name: 同步私有化分支
         if: ${{ startsWith( env.syncBranch, 'release/') }}
-        uses: 2bitlab/sync-branches-action@master
+        uses: AutumnWhj/sync-branches-action@master
         with:
           githubToken: ${{ secrets.ACCESS_TOKEN }}
           repository: 2bitlab/${{ env.REPOSITORY }}
