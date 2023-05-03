@@ -8,12 +8,8 @@ concurrency:
   cancel-in-progress: true
 jobs:
   build:
-    runs-on: self-hosted
-      env:
-        PROJECT_NAME: website
-    # runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
+    # runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: 从tag中解析出当前构建的分支，仓库等，并暴露到环境变量中
         uses: 2bitlab/tag-parse@main
