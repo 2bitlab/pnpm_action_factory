@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
     steps:
       - name: 从tag中解析出当前构建的分支，仓库等，并暴露到环境变量中
-        uses: 2bitlab/tag-parse-action@master
+        uses: 2bitlab/tag-parse@main
         with:
           githubToken: ${{ secrets.ACCESS_TOKEN }}
 
