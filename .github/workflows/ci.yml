@@ -52,7 +52,7 @@ jobs:
         run: pnpm install
 
       - name: 项目构建
-        run: pnpm run ${{ env.runCommand }}
+        run: pnpm run ${{ env.RUN_COMMAND }}
 
       - name: Get current time
         uses: 1466587594/get-current-time@v2
@@ -69,7 +69,7 @@ jobs:
       - name: 上传Html到腾讯云COS
         uses: zkqiang/tencent-cos-action@v0.1.0
         with:
-          args: upload ./apps/website/dist/index.html /${{ env.REPOSITORY }}${{ env.APP_PATH }}/${{ env.syncBranch }}/default/index.html
+          args: upload ./apps/website/dist/index.html /${{ env.REPOSITORY }}${{ env.APP_PATH }}/${{ env.SYNC_BRANCH }}/default/index.html
           secret_id: ${{ secrets.OSS_SECRET_ID }}
           secret_key: ${{ secrets.OSS_SECRET_KEY }}
           bucket: ${{ secrets.OSS_BUCKET }}
@@ -79,7 +79,7 @@ jobs:
       - name: 上传html到腾讯云COS-备份版本
         uses: zkqiang/tencent-cos-action@v0.1.0
         with:
-          args: upload ./apps/website/dist/index.html /${{ env.REPOSITORY }}${{ env.APP_PATH }}/${{ env.syncBranch }}/${{ env.NOW }}/index.html 
+          args: upload ./apps/website/dist/index.html /${{ env.REPOSITORY }}${{ env.APP_PATH }}/${{ env.SYNC_BRANCH }}/${{ env.NOW }}/index.html 
           secret_id: ${{ secrets.OSS_SECRET_ID }}
           secret_key: ${{ secrets.OSS_SECRET_KEY }}
           bucket: ${{ secrets.OSS_BUCKET }}
@@ -96,13 +96,13 @@ jobs:
 
 
       - name: 同步私有化分支
-        if: ${{ startsWith( env.syncBranch, 'release/') }}
+        if: ${{ startsWith( env.SYNC_BRANCH, 'release/') }}
         uses: AutumnWhj/sync-branches-action@master
         with:
           githubToken: ${{ secrets.ACCESS_TOKEN }}
           repository: 2bitlab/${{ env.REPOSITORY }}
           headBranch: ${{ env.BRANCH }}
-          syncBranches: ${{ env.syncBranch }}
+          SYNC_BRANCHes: ${{ env.SYNC_BRANCH }}
 
       - name: 构建成功消息
         if: ${{ success() }}
@@ -110,7 +110,7 @@ jobs:
         with:
           botKey: ${{ secrets.WORK_WECHAT_GITHUB_ROBOT_KEY }}
           msgtype: markdown
-          content: 🎉 项目${{ env.REPOSITORY }}，分支${{ env.syncBranch }}构建成功。--- Github Actions
+          content: 🎉 项目${{ env.REPOSITORY }}，分支${{ env.SYNC_BRANCH }}, 构建命令${{ env.RUN_COMMAND }}，上传到/${{ env.REPOSITORY }}${{ env.APP_PATH }}/${{ env.SYNC_BRANCH }} 构建成功。--- Github Actions
        
 
       - name: 构建失败消息
@@ -119,7 +119,7 @@ jobs:
         with:
           botKey: ${{ secrets.WORK_WECHAT_GITHUB_ROBOT_KEY }}
           msgtype: markdown
-          content: ❌ 项目${{ env.REPOSITORY }}，分支${{ env.syncBranch }}构建失败。--- Github Actions
+          content: ❌ 项目${{ env.REPOSITORY }}，分支${{ env.SYNC_BRANCH }}, 构建命令${{ env.RUN_COMMAND }}，上传到/${{ env.REPOSITORY }}${{ env.APP_PATH }}/${{ env.SYNC_BRANCH }} 构建失败。--- Github Actions
         
   
 
