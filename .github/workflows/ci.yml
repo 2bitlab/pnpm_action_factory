@@ -52,7 +52,7 @@ jobs:
         run: pnpm install
 
       - name: 项目构建
-        run: pnpm ${{ env.runCommand }}
+        run: pnpm run ${{ env.runCommand }}
 
       - name: Get current time
         uses: 1466587594/get-current-time@v2
