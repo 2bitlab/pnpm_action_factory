@@ -102,7 +102,7 @@ jobs:
           githubToken: ${{ secrets.ACCESS_TOKEN }}
           repository: 2bitlab/${{ env.REPOSITORY }}
           headBranch: ${{ env.BRANCH }}
-          SYNC_BRANCHes: ${{ env.SYNC_BRANCH }}
+          syncBranches: ${{ env.SYNC_BRANCH }}
 
       - name: 构建成功消息
         if: ${{ success() }}
